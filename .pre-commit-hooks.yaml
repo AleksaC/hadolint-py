@@ -1,0 +1,6 @@
+- id: hadolint
+  name: Hadolint
+  description: Lint Dockerfiles using hadolint
+  entry: hadolint
+  language: python
+  files: ^([\w\/_ ]+[\.\/])?Dockerfile$
