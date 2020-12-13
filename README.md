@@ -1,9 +1,12 @@
-# hadolint-pre-commit
+# hadolint-py
 
 [![license](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A python package that provides a pip-installable
 [hadolint](https://github.com/hadolint/hadolint) binary.
+
+The mechanism by which the binary is downloaded is basically copied from
+[shellcheck-py](https://github.com/shellcheck-py/shellcheck-py).
 
 ## Getting started
 
