@@ -1,6 +1,8 @@
 # hadolint-py
 
-[![license](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Test Status](https://dev.azure.com/aleksac/aleksa-oss/_apis/build/status/AleksaC.hadolint-py?branchName=main)](https://dev.azure.com/aleksac/aleksa-oss/_build?definitionId=9&_a=summary)
+[![Autoupdater Status](https://circleci.com/gh/AleksaC/hadolint-py.svg?style=svg)](https://circleci.com/gh/AleksaC/hadolint-py)
 
 A python package that provides a pip-installable
 [hadolint](https://github.com/hadolint/hadolint) binary.
