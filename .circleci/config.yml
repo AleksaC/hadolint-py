@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+  add-new-versions:
+    docker:
+      - image: circleci/python:3.8.2
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "90:82:0a:27:55:8c:24:58:9d:9b:ca:f1:3b:50:fa:48"
+      - checkout
+      - run:
+          name: add_new_versions
+          command: |
+            git config --global user.name "CircleCI"
+            git remote set-url origin $CIRCLE_REPOSITORY_URL &> /dev/null
+            ./add-new-versions.py
+
+workflows:
+  version: 2
+  main:
+    triggers:
+      - schedule:
+          cron: "0 12 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - add-new-versions
