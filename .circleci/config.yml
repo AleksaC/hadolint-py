@@ -26,6 +26,6 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - add-new-versions
