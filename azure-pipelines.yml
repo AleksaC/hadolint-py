@@ -1,9 +1,9 @@
 trigger:
   batch: "true"
   branches:
-    include: [master, test-*]
-  tags:
     include: ["*"]
+  tags:
+    include: ["v*"]
 
 resources:
   repositories:
