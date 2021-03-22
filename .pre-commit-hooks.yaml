@@ -1,6 +1,6 @@
 - id: hadolint
   name: Hadolint
-  description: Lint Dockerfiles using hadolint
+  description: Lint Dockerfiles using hadolint without needing docker or system installation
   entry: hadolint
   language: python
   types: [dockerfile]
