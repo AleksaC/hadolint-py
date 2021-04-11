@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+
+import base64
 import json
 import os
 import re
@@ -15,8 +17,14 @@ def get(url: str, headers: dict) -> dict:
 
 
 def get_releases() -> List[str]:
+    gh_token = os.environ["GH_TOKEN"]
+    auth = base64.b64encode(f"AleksaC:{gh_token}".encode()).decode()
+
     base_url = "https://api.github.com/repos/{}/{}/{}"
-    headers = {"Accept": "application/vnd.github.v3+json"}
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+        "Authorization": f"Basic {auth}",
+    }
 
     hadolint_releases = get(
         base_url.format("hadolint", "hadolint", "releases"), headers=headers
@@ -43,7 +51,11 @@ def update_version(version: str) -> None:
         validator = f.read()
         f.seek(0)
         f.write(
-            re.sub(r"HADOLINT_VERSION = \"\d+\.\d+.\d+\"\n", f'HADOLINT_VERSION = "{version}"\n', validator)
+            re.sub(
+                r"HADOLINT_VERSION = \"\d+\.\d+.\d+\"\n",
+                f'HADOLINT_VERSION = "{version}"\n',
+                validator,
+            )
         )
         f.truncate()
 
@@ -54,7 +66,7 @@ def push_tag(version: str) -> None:
 
 if __name__ == "__main__":
     releases = get_releases()
-    for release in reversed(releases):
-        print(f"Adding new release: {release}")
-        update_version(release.replace("v", ""))
-        push_tag(release)
+    # for release in reversed(releases):
+    #     print(f"Adding new release: {release}")
+    #     update_version(release.replace("v", ""))
+    #     push_tag(release)
