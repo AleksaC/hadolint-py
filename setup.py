@@ -11,7 +11,7 @@ from distutils.core import Command
 from setuptools import setup
 from setuptools.command.install import install as orig_install
 
-HADOLINT_VERSION = "2.5.0"
+HADOLINT_VERSION = "2.6.0"
 BASE_URL = "https://github.com/hadolint/hadolint/releases/download/v{}/hadolint-{}"
 POSTFIX = {
     "linux": "Linux-x86_64",
