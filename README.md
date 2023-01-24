@@ -18,10 +18,10 @@ The package hasn't been published to PyPI yet, and may never be, as its primary
 purpose doesn't require it. However you can install it through git:
 
 ```shell script
-pip install git+git://github.com/AleksaC/hadolint-py.git@v1.19.0
+pip install git+git://github.com/AleksaC/hadolint-py.git@v2.10.0
 ```
 
-To install another version simply replace the v1.19.0 with the version you want.
+To install another version simply replace the v2.10.0 with the version you want.
 
 ### With pre-commit
 
@@ -35,7 +35,7 @@ Example `.pre-commit-config.yaml` with rules `DL3025` and `DL3018` excluded:
 ```yaml
 repos:
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: v1.19.0
+    rev: v2.10.0
     hooks:
       - id: hadolint
         args: [--ignore, DL3025, --ignore, DL3018]
