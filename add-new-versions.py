@@ -2,7 +2,6 @@
 
 import argparse
 import base64
-import itertools
 import json
 import os
 import re
