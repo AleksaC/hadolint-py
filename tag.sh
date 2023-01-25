@@ -3,8 +3,8 @@
 set -euo pipefail
 
 git add -u
-git commit -m "Update to version $1"
-git pull --rebase
-git push
+git commit -m "Add version $1"
+git pull --ff-only
 git tag $1
-git push origin $1
+git push
+git push --tags
