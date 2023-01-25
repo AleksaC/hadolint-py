@@ -10,3 +10,5 @@ venv
 .tox
 
 *.egg-info
+
+.env
