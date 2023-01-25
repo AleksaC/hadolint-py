@@ -10,3 +10,19 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        types_or: [text]
+        exclude: setup.py$
+        files: ^.*\.py(\.j2)?$
+
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        types_or: [text]
+        exclude: setup.py$
+        files: ^.*\.py(\.j2)?$
