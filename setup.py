@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
+import hashlib
 import http
 import os.path
+import platform
 import stat
-import sys
 import urllib.request
 from distutils.command.build import build as orig_build
 from distutils.core import Command
@@ -11,32 +12,50 @@ from distutils.core import Command
 from setuptools import setup
 from setuptools.command.install import install as orig_install
 
-HADOLINT_VERSION = "2.10.0"
-BASE_URL = "https://github.com/hadolint/hadolint/releases/download/v{}/hadolint-{}"
-POSTFIX = {
-    "linux": "Linux-x86_64",
-    "darwin": "Darwin-x86_64",
-    "win32": "Windows-x86_64.exe",
-}
+
+HADOLINT_VERSION = "2.11.0"
+ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Darwin-x86_64', '549a0bf32c68e19d9c77dd62db4df8e88340349c29da28133a53bd0e5016f6f4'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Linux-arm64', '64ee291c32d1ff4a5d596e3ee1c7f89c733114364dce83f6ab91a21e40a56b79'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Linux-x86_64', 'e1f20d4f8c7d1584271263aad69463aa7b01f4ace91221466de104bcca9245f0'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Windows-x86_64.exe', '37e32da38d68c53b7fd0a8438d0e41e5279f83d177f2295d6672c4d9554d7f04')}
+BASE_URL = "https://github.com/hadolint/hadolint/releases/download"
 PY_VERSION = "1"
 
 
 def get_download_url() -> str:
-    return BASE_URL.format(HADOLINT_VERSION, POSTFIX[sys.platform])
+    os, arch = platform.system().lower(), platform.machine().lower()
+    if (
+        os == "windows"
+        or "x86" in arch
+        or "amd" in arch
+        or "i386" in arch
+        or "i686" in arch
+    ):
+        arch = "x86_64"
+    elif "arm" in arch or arch == "aarch64":
+        arch = "arm64"
+
+    archive, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+    url = f"{BASE_URL}/v{HADOLINT_VERSION}/{archive}"
+
+    url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+
+    return url, sha256
 
 
-def download(url: str) -> bytes:
+def download(url: str, sha256: str) -> bytes:
     with urllib.request.urlopen(url) as resp:
         code = resp.getcode()
         if code != http.HTTPStatus.OK:
             raise ValueError(f"HTTP failure. Code: {code}")
         data = resp.read()
 
+    checksum = hashlib.sha256(data).hexdigest()
+    if checksum != sha256:
+        raise ValueError(f"sha256 mismatch, expected {sha256}, got {checksum}")
+
     return data
 
 
 def save_executable(data: bytes, base_dir: str):
-    exe = "hadolint" if sys.platform != "win32" else "hadolint.exe"
+    exe = "hadolint" if platform.system() != "Windows" else "hadolint.exe"
     output_path = os.path.join(base_dir, exe)
     os.makedirs(base_dir)
 
@@ -69,13 +88,13 @@ class fetch_binaries(Command):
 
     def run(self):
         # save binary to self.build_temp
-        url = get_download_url()
-        data = download(url)
+        url, sha = get_download_url()
+        data = download(url, sha)
         save_executable(data, self.build_temp)
 
 
 class install_hadolint(Command):
-    description = "install the shellcheck executable"
+    description = "install the hadolint executable"
     outfiles = ()
     build_dir = install_dir = None
 
@@ -110,6 +129,7 @@ try:
 except ImportError:
     pass
 else:
+
     class bdist_wheel(orig_bdist_wheel):
         def finalize_options(self):
             orig_bdist_wheel.finalize_options(self)

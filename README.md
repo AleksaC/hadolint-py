@@ -1,8 +1,6 @@
 # hadolint-py
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Test Status](https://dev.azure.com/aleksac/aleksa-oss/_apis/build/status/AleksaC.hadolint-py?branchName=main)](https://dev.azure.com/aleksac/aleksa-oss/_build?definitionId=9&_a=summary)
-[![Autoupdater Status](https://circleci.com/gh/AleksaC/hadolint-py.svg?style=svg)](https://circleci.com/gh/AleksaC/hadolint-py)
 
 A python package that provides a pip-installable
 [hadolint](https://github.com/hadolint/hadolint) binary.
@@ -18,10 +16,10 @@ The package hasn't been published to PyPI yet, and may never be, as its primary
 purpose doesn't require it. However you can install it through git:
 
 ```shell script
-pip install git+git://github.com/AleksaC/hadolint-py.git@v1.19.0
+pip install git+git://github.com/AleksaC/hadolint-py.git@v2.11.0
 ```
 
-To install another version simply replace the v1.19.0 with the version you want.
+To install another version simply replace the v2.11.0 with the version you want.
 
 ### With pre-commit
 
@@ -35,7 +33,7 @@ Example `.pre-commit-config.yaml` with rules `DL3025` and `DL3018` excluded:
 ```yaml
 repos:
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: v1.19.0
+    rev: v2.11.0
     hooks:
       - id: hadolint
         args: [--ignore, DL3025, --ignore, DL3018]
