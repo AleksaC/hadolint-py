@@ -32,10 +32,13 @@ def get_download_url() -> str:
     elif "arm" in arch or arch == "aarch64":
         arch = "arm64"
 
-    archive, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
-    url = f"{BASE_URL}/v{HADOLINT_VERSION}/{archive}"
-
-    url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+    try:
+        url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+    except KeyError:
+        # Fall back to x86 on m1 macs
+        if arch == "arm64" and os == "darwin":
+            arch = "x86_64"
+        url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
 
     return url, sha256
 
