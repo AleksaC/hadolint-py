@@ -13,10 +13,10 @@ from setuptools import setup
 from setuptools.command.install import install as orig_install
 
 
-HADOLINT_VERSION = "2.12.0"
-ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64', '2a5b7afcab91645c39a7cebefcd835b865f7488e69be24567f433dfc3d41cd27'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-arm64', '5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64', '56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Windows-x86_64.exe', 'ed89a156290e15452276b2b4c84efa688a5183d3b578bfaec7cfdf986f0632a8')}
+HADOLINT_VERSION = "2.11.0"
+ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Darwin-x86_64', '549a0bf32c68e19d9c77dd62db4df8e88340349c29da28133a53bd0e5016f6f4'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Linux-arm64', '64ee291c32d1ff4a5d596e3ee1c7f89c733114364dce83f6ab91a21e40a56b79'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Linux-x86_64', 'e1f20d4f8c7d1584271263aad69463aa7b01f4ace91221466de104bcca9245f0'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.11.0/hadolint-Windows-x86_64.exe', '37e32da38d68c53b7fd0a8438d0e41e5279f83d177f2295d6672c4d9554d7f04')}
 BASE_URL = "https://github.com/hadolint/hadolint/releases/download"
-PY_VERSION = "1"
+PY_VERSION = "2"
 
 
 def get_download_url() -> str:
@@ -32,10 +32,13 @@ def get_download_url() -> str:
     elif "arm" in arch or arch == "aarch64":
         arch = "arm64"
 
-    archive, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
-    url = f"{BASE_URL}/v{HADOLINT_VERSION}/{archive}"
-
-    url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+    try:
+        url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
+    except KeyError:
+        # Fall back to x86 on m1 macs
+        if arch == "arm64" and os == "darwin":
+            arch = "x86_64"
+        url, sha256 = ARCHIVE_SHA256[f"{os}-{arch}"]
 
     return url, sha256
 
