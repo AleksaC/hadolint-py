@@ -2,6 +2,7 @@
 
 import argparse
 import base64
+import http
 import json
 import os
 import re
@@ -61,7 +62,9 @@ class Template(NamedTuple):
     vars: dict[str, Any]
 
 
-def _get(url: str, headers: Optional[dict[str, str]] = None) -> dict:
+def _get(
+    url: str, headers: Optional[dict[str, str]] = None
+) -> http.client.HTTPResponse:
     if headers is None:
         headers = {}
 
@@ -91,10 +94,10 @@ def get_gh_auth_headers():
 
 def get_versions(
     repo: str, *, from_releases: bool = True, min_version: Optional[Version] = None
-) -> list[str]:
+) -> list[Version]:
     base_url = "https://api.github.com/repos/{}/{}?per_page=100&page={}"
 
-    versions = []
+    versions: list[Version] = []
     page = 1
     while releases_page := get_json(
         base_url.format(repo, "releases" if from_releases else "tags", page),
