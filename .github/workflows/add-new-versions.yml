@@ -31,4 +31,4 @@ jobs:
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
       - name: Add new versions
-        run: ./add-new-versions.py
+        run: ./add-new-versions.py --push

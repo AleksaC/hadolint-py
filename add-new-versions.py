@@ -82,6 +82,10 @@ def get_text(url: str, headers: Optional[dict[str, str]] = None) -> str:
     return _get(url, headers).read().decode()
 
 
+def git(*args: str) -> None:
+    subprocess.run(["git", *args], check=True)
+
+
 @lru_cache
 def get_gh_auth_headers():
     gh_token = os.environ["GH_TOKEN"]
@@ -192,13 +196,15 @@ def render_templates(templates: list[Template]) -> None:
             f.write(template.render(**vars))
 
 
-def push_tag(version: Version) -> None:
-    subprocess.run(["./tag.sh", f"v{version}"], check=True)
+def tag_version(version: str) -> None:
+    git("add", "-u")
+    git("commit", "-m", f"Add version {version}")
+    git("tag", version)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--render-only", default=False, action="store_true")
+    parser.add_argument("--push", default=False, action="store_true")
     args = parser.parse_args(argv)
 
     versions = get_missing_versions(REPO, MIRROR_REPO, Version.from_string(MIN_VERSION))
@@ -223,8 +229,11 @@ def main(argv=None):
             ]
         )
 
-        if not args.render_only:
-            push_tag(version)
+        tag_version(f"v{version}")
+
+        if args.push:
+            git("push")
+            git("push", "--tags")
 
     return 0
 
