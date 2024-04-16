@@ -13,8 +13,8 @@ from setuptools import setup
 from setuptools.command.install import install as orig_install
 
 
-HADOLINT_VERSION = "2.12.0"
-ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64', '2a5b7afcab91645c39a7cebefcd835b865f7488e69be24567f433dfc3d41cd27'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-arm64', '5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64', '56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Windows-x86_64.exe', 'ed89a156290e15452276b2b4c84efa688a5183d3b578bfaec7cfdf986f0632a8')}
+HADOLINT_VERSION = "2.12.1-beta"
+ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Darwin-x86_64', '911008b09e88b9ce62dbd12345af8f4c933370ebcfb01211d934f1e0a4d9aecc'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Linux-arm64', '5997119de9b8332a003be938baff3ebd2ff17dfb62e2bceccd59bd9c112599ce'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Linux-x86_64', 'd0779284293475905cfa4b3a7b5c433eca6d731e45b5df0e157f46b4e6311888'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Windows-x86_64.exe', '5c97ce0844cfda5a8256f499ad8f7f153b68c0b15f2b28a8396e957987bebfa1')}
 BASE_URL = "https://github.com/hadolint/hadolint/releases/download"
 PY_VERSION = "2"
 
