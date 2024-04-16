@@ -3,6 +3,8 @@ name: Run tests
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 defaults:
@@ -14,7 +16,7 @@ jobs:
     strategy:
       matrix:
         version: ["3.8", "3.9", "3.10", "3.11"]
-        os: [ubuntu-22.04, windows-2022, macos-12]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
