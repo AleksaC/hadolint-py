@@ -16,7 +16,7 @@ from setuptools.command.install import install as orig_install
 HADOLINT_VERSION = "2.12.1-beta"
 ARCHIVE_SHA256 = {'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Darwin-x86_64', '911008b09e88b9ce62dbd12345af8f4c933370ebcfb01211d934f1e0a4d9aecc'), 'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Linux-arm64', '5997119de9b8332a003be938baff3ebd2ff17dfb62e2bceccd59bd9c112599ce'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Linux-x86_64', 'd0779284293475905cfa4b3a7b5c433eca6d731e45b5df0e157f46b4e6311888'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Windows-x86_64.exe', '5c97ce0844cfda5a8256f499ad8f7f153b68c0b15f2b28a8396e957987bebfa1')}
 BASE_URL = "https://github.com/hadolint/hadolint/releases/download"
-PY_VERSION = "2"
+PY_VERSION = "3"
 
 
 def get_download_url() -> str:
@@ -60,7 +60,7 @@ def download(url: str, sha256: str) -> bytes:
 def save_executable(data: bytes, base_dir: str):
     exe = "hadolint" if platform.system() != "Windows" else "hadolint.exe"
     output_path = os.path.join(base_dir, exe)
-    os.makedirs(base_dir)
+    os.makedirs(base_dir, exist_ok=True)
 
     with open(output_path, "wb") as fp:
         fp.write(data)

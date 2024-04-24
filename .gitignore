@@ -9,6 +9,8 @@ venv
 
 .tox
 
+build
+
 *.egg-info
 
 .env
