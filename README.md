@@ -35,7 +35,7 @@ Example `.pre-commit-config.yaml` with rules `DL3025` and `DL3018` excluded:
 ```yaml
 repos:
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: v2.12.1-beta
+    rev: v2.12.1b3
     hooks:
       - id: hadolint
         args: [--ignore, DL3025, --ignore, DL3018]
