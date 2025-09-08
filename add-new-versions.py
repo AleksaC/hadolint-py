@@ -176,6 +176,8 @@ def get_archives(repo: str, version: Version) -> dict[str, tuple[str, str]]:
         )
 
         os_normalized, arch_normalized = os.lower(), arch.lower()
+        if os_normalized == "macos":
+            os_normalized = "darwin"
 
         if os_normalized not in OS or arch_normalized not in ARCH:
             raise ValueError("Unsupported plaform!", os, arch)
