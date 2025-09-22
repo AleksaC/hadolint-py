@@ -13,8 +13,8 @@ from setuptools import setup
 from setuptools.command.install import install as orig_install
 
 
-HADOLINT_VERSION = "2.13.1"
-ARCHIVE_SHA256 = {'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-linux-arm64', 'ca77a6010454826ab90335095add1b9b84f2d72d44581b6c2dbe08cec46b0165'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-linux-x86_64', 'f8b05e4c724cdeb84c0dca07e40936c3d875c0af5d120a27c94026a0f370b2cf'), 'darwin-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-macos-arm64', '0a3eb44bb5e496184dbea71be142a9be8d70c11b48302ae851e6274ef09ae407'), 'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-macos-x86_64', 'd39de79513b8be68bd807664f1fc9fe328d95977eba996e2d7bda2bfeeae753a'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-windows-x86_64.exe', '397bcb18f76f6c112a5e0d3b3579ba8adf9e2ef71596387df7dfdbe5c06e0e53')}
+HADOLINT_VERSION = "2.14.0"
+ARCHIVE_SHA256 = {'linux-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-arm64', '331f1d3511b84a4f1e3d18d52fec284723e4019552f4f47b19322a53ce9a40ed'), 'linux-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-x86_64', '6bf226944684f56c84dd014e8b979d27425c0148f61b3bd99bcc6f39e9dc5a47'), 'darwin-arm64': ('https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-macos-arm64', '3625e2e9f43dcfe7bd38738a5f5520ed50ce39ed28485266e6803dd7bc197b10'), 'darwin-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-macos-x86_64', '2b69a853433f1eca522ffb921cd490bd1321424d03331fd8390f93b7fb4a02e9'), 'windows-x86_64': ('https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-windows-x86_64.exe', '8e0ee174f88edb14f207a68430c7a53c2883ed509cdbde9a3a26fffa140fa5e4')}
 BASE_URL = "https://github.com/hadolint/hadolint/releases/download"
 PY_VERSION = "1"
 
