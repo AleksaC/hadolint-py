@@ -19,7 +19,7 @@ from typing import Optional
 import jinja2
 
 
-VERSION_RE = re.compile("^v?(?P<major>[0-9]+)\.(?P<minor>[0-9]+)\.(?P<patch>[0-9]+)$")
+VERSION_RE = re.compile(r"^v?(?P<major>[0-9]+)\.(?P<minor>[0-9]+)\.(?P<patch>[0-9]+)$")
 
 OS = {"darwin", "linux", "windows"}
 ARCH = {"x86_64", "arm64"}
@@ -148,25 +148,23 @@ def get_archives(repo: str, version: Version) -> dict[str, tuple[str, str]]:
     release_url = f"https://api.github.com/repos/{repo}/releases/tags/v{version}"
     release = get_json(release_url, headers=get_gh_auth_headers())
 
-    checksums, binaries = {}, {}
+    checksums_url, binaries = None, {}
     for file in release["assets"]:
         file_name = file["name"]
         if file["name"].endswith(".sha256"):
-            checksums[file_name] = file["browser_download_url"]
+            if checksums_url is not None:
+                raise ValueError("Expected all checksums in one file")
+            checksums_url = file["browser_download_url"]
         else:
             binaries[file_name] = file["browser_download_url"]
 
     archives = {}
 
-    for checksum_name, checksum_url in checksums.items():
-        sha, binary_name = (
-            get_text(checksum_url, headers=get_gh_auth_headers()).strip().split()
-        )
-
+    checksums = get_text(checksums_url, headers=get_gh_auth_headers())
+    for checksum in checksums.strip().splitlines():
+        sha, binary_name = checksum.split()
         if binary_name.startswith("*"):
             binary_name = binary_name[1:]
-        if not checksum_name.startswith(binary_name):
-            raise AssertionError
 
         archive = (binaries[binary_name], sha)
         _, os, arch = (
